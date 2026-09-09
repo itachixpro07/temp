@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+  }
+
+  /* Keyboard focus stays visible everywhere. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-tulsi ring-offset-2 ring-offset-paper;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5
+           text-sm font-medium transition-colors disabled:opacity-50
+           disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-tulsi text-white hover:bg-tulsi-deep;
+  }
+
+  .btn-quiet {
+    @apply btn bg-sage text-ink hover:bg-line;
+  }
+
+  .btn-ghost {
+    @apply btn text-muted hover:text-ink hover:bg-sage;
+  }
+
+  .field {
+    @apply w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-[15px]
+           placeholder:text-muted/60 focus:border-tulsi focus:outline-none
+           focus:ring-1 focus:ring-tulsi;
+  }
+
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink;
+  }
+
+  .panel {
+    @apply rounded-xl border border-line bg-white;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1
+           text-xs font-medium ring-1 ring-inset;
+  }
+}
+
+/* The listening pulse is the one piece of ambient motion in the product;
+   it exists to show the mic is live, not for decoration. */
+@keyframes halo {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+.halo::before,
+.halo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: theme('colors.tulsi.DEFAULT');
+  animation: halo 2s ease-out infinite;
+}
+
+.halo::after {
+  animation-delay: 1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
